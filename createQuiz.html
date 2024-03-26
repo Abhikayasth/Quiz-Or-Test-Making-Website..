@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="createQuiz.css">
+<title>Create Quiz</title>
+</head>
+<body>
+
+<header class="quiz-header">
+  <!-- Placeholder for the dynamically created quiz header -->
+</header>
+
+<main class="quiz-main">
+  <!-- Placeholder for the dynamically created quiz questions -->
+</main>
+
+<script>
+// Function to get URL parameters
+function getParameterByName(name, url = window.location.href) {
+  name = name.replace(/[\[\]]/g, '\\$&');
+  var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+      results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+// Function to edit an existing question
+function editQuestion(questionId) {
+  var question = document.getElementById(questionId);
+  var newQuestion = prompt("Edit the question:", question.innerText);
+  if (newQuestion !== null && newQuestion.trim() !== "") {
+    question.innerText = newQuestion;
+  }
+}
+
+// Function to add a new option to a question
+function addOption(questionDiv) {
+  var optionDiv = document.createElement('div');
+  optionDiv.className = 'option';
+
+  var optionInput = document.createElement('input');
+  optionInput.type = 'text';
+  optionInput.name = 'option';
+  optionInput.placeholder = 'Option text';
+
+  var radioInput = document.createElement('input');
+  radioInput.type = 'radio';
+  radioInput.name = 'options';
+
+  optionDiv.appendChild(radioInput);
+  optionDiv.appendChild(optionInput);
+  questionDiv.appendChild(optionDiv);
+}
+
+// Function to check if all mandatory fields are filled
+function checkMandatoryFields(questionDiv) {
+  var inputs = questionDiv.querySelectorAll('input[type="text"], input[type="number"]');
+  for (var input of inputs) {
+    if (input.value.trim() === '') {
+      return false;
+    }
+  }
+  return true;
+}
+
+// Function to finalize the question
+function finalizeQuestion(questionDiv, addNextQuestionButton) {
+  if (checkMandatoryFields(questionDiv)) {
+    addNextQuestionButton.style.display = 'block';
+  } else {
+    alert('Please fill in all the fields before finalizing the question.');
+  }
+}
+
+// Function to add a new question
+function addQuestion() {
+  var main = document.querySelector('.quiz-main');
+  var questionDiv = document.createElement('div');
+  questionDiv.className = 'question';
+  
+  var questionLabel = document.createElement('label');
+  questionLabel.innerText = 'Question: ';
+  var questionInput = document.createElement('input');
+  questionInput.type = 'text';
+  questionInput.name = 'question';
+  
+  var addOptionButton = document.createElement('button');
+  addOptionButton.innerText = 'Add Option';
+  addOptionButton.type = 'button';
+  addOptionButton.onclick = function() {
+    addOption(questionDiv);
+  };
+  
+  var marksInput = document.createElement('input');
+  marksInput.type = 'number';
+  marksInput.name = 'marks';
+  marksInput.placeholder = 'Marks for this question';
+  
+  var doneButton = document.createElement('button');
+  doneButton.innerText = 'Done';
+  doneButton.className = 'done-button';
+  doneButton.onclick = function() {
+    finalizeQuestion(questionDiv, addNextQuestionButton);
+  };
+
+  var addNextQuestionButton = document.createElement('button');
+  addNextQuestionButton.innerText = 'Add Next Question';
+  addNextQuestionButton.className = 'add-next-question';
+  addNextQuestionButton.style.display = 'none'; // Hide the button initially
+  addNextQuestionButton.onclick = function() {
+    addQuestion();
+    addNextQuestionButton.remove();
+  };
+  
+  questionDiv.appendChild(questionLabel);
+  questionDiv.appendChild(questionInput);
+  questionDiv.appendChild(addOptionButton);
+  questionDiv.appendChild(marksInput);
+  questionDiv.appendChild(doneButton);
+  questionDiv.appendChild(addNextQuestionButton);
+  
+  main.appendChild(questionDiv);
+}
+
+// When the page loads, create a new header with the subject name and add a button to create the first question
+window.onload = function() {
+  var subject = getParameterByName('subject');
+  var quizType = getParameterByName('quizType');
+  
+  if (subject) {
+    var header = document.querySelector('.quiz-header');
+    header.innerHTML = '<h1>' + subject + '</h1><p>Type: ' + quizType + '</p>';
+    
+    var addFirstQuestionButton = document.createElement('button');
+    addFirstQuestionButton.innerText = 'Add Your First Question';
+    addFirstQuestionButton.onclick = function() {
+      addQuestion();
+      addFirstQuestionButton.remove();
+    };
+    
+    header.appendChild(addFirstQuestionButton);
+  }
+};
+document.getElementById('submitQuiz').addEventListener('click', function(event) {
+  event.preventDefault(); // Prevent the default form submission behavior
+
+  // ... Your code to gather quiz data and handle the quiz ...
+
+  // Display a success message
+  var successMessage = document.createElement('p');
+  successMessage.innerText = 'Quiz submitted successfully!';
+  document.body.appendChild(successMessage);
+
+  // Optionally, you can also redirect to another page or perform other actions
+});
+
+</script>
+<!-- Submit Button -->
+<button id="submit">Submit</button>
+</body>
+</html>

@@ -1,0 +1,147 @@
+/* Professional and Dynamic Quiz Page Styles */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/* Reset default browser styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f4f4f4;
+  line-height: 1.6;
+}
+
+.quiz-header {
+  background-color: #333;
+  color: #fff;
+  padding: 1rem 0;
+  text-align: center;
+  animation: fadeInDown 1s ease-in-out;
+}
+
+.quiz-main {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fff;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  animation: fadeInUp 1s ease-in-out;
+}
+
+.question {
+  background-color: #f9f9f9;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.question:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+button {
+  background-color: #5D5FEF;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+button:hover {
+  background-color: #4343f5;
+  transform: scale(1.05);
+}
+
+input[type='text'],
+input[type='number'] {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  transition: border-color 0.3s;
+}
+
+input[type='text']:hover,
+input[type='number']:hover {
+  border-color: #5D5FEF;
+}
+
+/* Keyframes for animations */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media only screen and (max-width: 768px) {
+  .quiz-main {
+    padding: 1rem;
+  }
+
+  .question {
+    padding: 0.5rem;
+  }
+
+  button {
+    padding: 0.4rem 0.8rem;
+  }
+
+  input[type='text'],
+  input[type='number'] {
+    padding: 0.4rem;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .quiz-header {
+    padding: 0.5rem 0;
+  }
+
+  .quiz-main {
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  .question {
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  button {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+  }
+
+  input[type='text'],
+  input[type='number'] {
+    padding: 0.3rem;
+    font-size: 0.8rem;
+  }
+}
